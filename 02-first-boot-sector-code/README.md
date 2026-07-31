@@ -44,6 +44,11 @@ boot_drive: db 0
 times 510-($-$$) db 0
 dw 0xaa55
 
+
+
+
+
+
 ### Line by line
 
 - **`org 0x7c00`** — Tells the assembler this code will physically sit at memory
