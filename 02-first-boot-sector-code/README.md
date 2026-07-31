@@ -49,27 +49,7 @@ dw 0xaa55
 
 
 
-### Line by line
 
-- **`org 0x7c00`** — Tells the assembler this code will physically sit at memory
-  address `0x7C00` once loaded (see [`01-cpu-ram-vs-ssd`](../01-cpu-ram-vs-ssd)), so
-  any address math it does is correct.
-- **`mov ah, 0x0e`** — Copies the value `0x0E` into the CPU register `ah`. This value
-  is a code the BIOS recognizes as "print a single character."
-- **`mov al, 'A'`** — Copies the letter `A` (its numeric value, `0x41`) into register
-  `al` — this is the character that will actually get printed.
-- **`int 0x10`** — Triggers a BIOS interrupt. This pauses our code and hands control
-  to the BIOS's own built-in screen-printing routine, which reads `ah`/`al` and draws
-  the letter on screen. The CPU itself has no idea how to talk to a screen — only the
-  BIOS's prewritten code knows how. Once done, control returns to the next line.
-- **`hang: jmp hang`** — An infinite loop. Keeps the CPU safely parked here instead of
-  running into whatever random bytes come next in memory.
-- **`times 510-($-$$) db 0`** — Fills every remaining byte with zero, up to byte 510.
-- **`dw 0xaa55`** — The boot signature. The BIOS checks bytes 510–511 for exactly this
-  value before it will treat the sector as bootable.
-
-The whole file is required to be **exactly 512 bytes** — that's the fixed size the
-BIOS always reads and always checks for a signature on.
 
 ---
 
